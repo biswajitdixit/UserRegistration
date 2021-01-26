@@ -6,7 +6,8 @@ public class UserRegistration {
     private static final String EMAIL_PATTERN="^[0-9A-Za-z]+([._+-][0-9a-zA-Z]+)*@[0-9a-zA-Z]+.[0-9a-zA-Z]{2,4}([.][a-zA-Z]{2})*$";
     private static final String MOBILE_PATTERN="[91]+[\s]+[0-9]{10}";
     private static final String PASSWORD1_PATTERN="[a-z A-Z 0-9]{8,}";
-    public boolean validateFirstName(String FirstName) {
+    private static final String PASSWORD2_PATTERN="(?=.*?[A-Z])[a-z A-Z 0-9]{8,}";
+   public boolean validateFirstName(String FirstName) {
         Pattern pattern = Pattern.compile(NAME_PATTERN);
         boolean res = pattern.matcher(FirstName).matches();
         return res;
@@ -32,6 +33,11 @@ public class UserRegistration {
         boolean res =pattern.matcher(Password1).matches();
         return res;
     }
+    public boolean validatePassword2(String Password2){
+        Pattern pattern=Pattern.compile(PASSWORD2_PATTERN);
+        boolean res =pattern.matcher(Password2).matches();
+        return res;
+    }
     public static void main(String[] args) {
         UserRegistration ur =new UserRegistration ();
         Scanner bc=new Scanner(System.in);
@@ -41,6 +47,7 @@ public class UserRegistration {
         System.out.println("3.Email Validation");
         System.out.println("4.Mobile No Validation");
         System.out.println("5.Password pattern one validation");
+        System.out.println("6.Password pattern two validation");
         System.out.println("Enter choice");
 
         int choice =bc.nextInt();
@@ -85,6 +92,15 @@ public class UserRegistration {
                 System.out.println("Enter the password");
                 String Password1=sc.nextLine();
                 if (ur.validatePassword1(Password1)){
+                    System.out.println("valid");
+                }else {
+                    System.out.println("not valid");
+                }
+                break;
+            case 6:
+                System.out.println("Enter the password");
+                String Password2=sc.nextLine();
+                if (ur.validatePassword2(Password2)){
                     System.out.println("valid");
                 }else {
                     System.out.println("not valid");
