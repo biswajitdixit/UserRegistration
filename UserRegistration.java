@@ -9,11 +9,17 @@ public class UserRegistration {
         return res;
 
     }
+    public boolean validateLastName(String LastName ){
+        Pattern pattern=Pattern.compile(NAME_PATTERN);
+        boolean res=pattern.matcher(LastName).matches();
+        return res;
+    }
     public static void main(String[] args) {
         UserRegistration ur =new UserRegistration ();
         Scanner bc=new Scanner(System.in);
         Scanner sc=new Scanner(System.in);
         System.out.println("1.First Name Validation");
+        System.out.println("2.Last Name Validation");
         System.out.println("Enter choice");
 
         int choice =bc.nextInt();
@@ -22,6 +28,15 @@ public class UserRegistration {
                 System.out.println("Enter the first name ");
                 String FirstName= sc.nextLine();
                 if ( ur.validateFirstName(FirstName) ){
+                    System.out.println("valid");
+                }else {
+                    System.out.println("not valid");
+                }
+                break;
+            case 2:
+                System.out.println("Enter the last name");
+                String LastName=sc.nextLine();
+                if (ur.validateLastName(LastName) ){
                     System.out.println("valid");
                 }else {
                     System.out.println("not valid");
