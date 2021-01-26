@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 public class UserRegistration {
     private static final String NAME_PATTERN = "^[A-Z][a-z]{2,}$";
     private static final String EMAIL_PATTERN="^[0-9A-Za-z]+([._+-][0-9a-zA-Z]+)*@[0-9a-zA-Z]+.[0-9a-zA-Z]{2,4}([.][a-zA-Z]{2})*$";
+    private static final String MOBILE_PATTERN="[91]+[\s]+[0-9]{10}";
     public boolean validateFirstName(String FirstName) {
         Pattern pattern = Pattern.compile(NAME_PATTERN);
         boolean res = pattern.matcher(FirstName).matches();
@@ -20,6 +21,11 @@ public class UserRegistration {
         boolean res=pattern.matcher(Email).matches();
         return res;
     }
+    public  boolean validateMobileNo(String MobileNo){
+        Pattern pattern=Pattern.compile(MOBILE_PATTERN);
+        boolean res=pattern.matcher(MobileNo).matches();
+        return res;
+    }
     public static void main(String[] args) {
         UserRegistration ur =new UserRegistration ();
         Scanner bc=new Scanner(System.in);
@@ -27,6 +33,7 @@ public class UserRegistration {
         System.out.println("1.First Name Validation");
         System.out.println("2.Last Name Validation");
         System.out.println("3.Email Validation");
+        System.out.println("4.Mobile No Validation");
         System.out.println("Enter choice");
 
         int choice =bc.nextInt();
@@ -53,6 +60,15 @@ public class UserRegistration {
                 System.out.println("Enter the email");
                 String Email= sc.nextLine();
                 if (ur.validateEmail(Email)){
+                    System.out.println("valid");
+                }else {
+                    System.out.println("not valid");
+                }
+                break;
+            case 4:
+                System.out.println("Enter the mobile no");
+                String MobileNo=sc.nextLine();
+                if (ur.validateMobileNo(MobileNo)){
                     System.out.println("valid");
                 }else {
                     System.out.println("not valid");
