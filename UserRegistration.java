@@ -8,6 +8,7 @@ public class UserRegistration {
     private static final String PASSWORD1_PATTERN="[a-z A-Z 0-9]{8,}";
     private static final String PASSWORD2_PATTERN="(?=.*?[A-Z])[a-z A-Z 0-9]{8,}";
     private static final String PASSWORD3_PATTERN="(?=.?[A-Z])(?=.?[0-9])[a-z A-Z 0-9]{8,}";
+    private static final String PASSWORD4_PATTERN="(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=])(?=\\S+$).{8,}";
    public boolean validateFirstName(String FirstName) {
         Pattern pattern = Pattern.compile(NAME_PATTERN);
         boolean res = pattern.matcher(FirstName).matches();
@@ -44,6 +45,11 @@ public class UserRegistration {
         boolean res=pattern.matcher(Password3).matches();
         return res;
     }
+    public boolean validatePassword4(String Password4){
+        Pattern pattern=Pattern.compile(PASSWORD4_PATTERN);
+        boolean res=pattern.matcher(Password4).matches();
+        return res;
+    }
     public static void main(String[] args) {
         UserRegistration ur =new UserRegistration ();
         Scanner bc=new Scanner(System.in);
@@ -55,6 +61,7 @@ public class UserRegistration {
         System.out.println("5.Password pattern one validation");
         System.out.println("6.Password pattern two validation");
         System.out.println("7.Password pattern three validation");
+        System.out.println("8.Password pattern four validation");
         System.out.println("Enter choice");
 
         int choice =bc.nextInt();
@@ -117,6 +124,15 @@ public class UserRegistration {
                 System.out.println("Enter the password");
                 String Password3= sc.nextLine();
                 if (ur.validatePassword3(Password3)){
+                    System.out.println("valid");
+                }else {
+                    System.out.println("not valid");
+                }
+   		break;
+            case  8:
+                System.out.println("Enter the password");
+                String Password4=sc.nextLine();
+                if (ur.validatePassword4(Password4)){
                     System.out.println("valid");
                 }else {
                     System.out.println("not valid");
