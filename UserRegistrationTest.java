@@ -1,39 +1,126 @@
-import java.util.Arrays;
+
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
-
-@RunWith(Parameterized.class)
 public class UserRegistrationTest {
-
-    private String emailId;
-    private boolean expected;
-
-    public UserRegistrationTest(String emailId, boolean expected) {
-        this.emailId = emailId;
-        this.expected = expected;
-    }
-    @Parameterized.Parameters(name= "{index}: isValid({0})={1}")
-    public static Iterable<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                        {"abc@yahoo.com", true},
-                        {"abc-100@yahoo.com", true},
-                        {"abc.100@yahoo.com", true},
-                        {"abc.100@abc.net", true},
-                        {"abc@1.com", true},
-                        {"abc", false},
-                        {"abc@.com.my",false},
-                        {"abc123@.com",false }
-                }
-        );
-    }
+    UserRegistration userRegistration = new UserRegistration();
     @Test
-    public void testIsValidEmailId() throws Exception {
-        boolean actual= UserRegistration.validateEmail(emailId);
-        assertThat(actual, is(equalTo(expected)));
+    public void givenFirstNameValid() {
+        boolean result = true;
+        try {
+            result = userRegistration.validateFirstName("Biswa");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenFirstNameInvalid() {
+        boolean result = false;
+        try {
+            result = userRegistration.validateFirstName("bisw");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void givenLastNameValid() {
+        boolean result = true;
+        try {
+            result = userRegistration.validateLastName("Dixit");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenLastNameInvalid() {
+        boolean result = false;
+        try {
+            result = userRegistration.validateLastName("Dix");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void givenEmailValid() {
+        boolean result = true;
+        try {
+            result = userRegistration.validateEmail("biswajitdixit7991@gmail.com");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenEmailInvalid() {
+        boolean result = false;
+        try {
+            result = userRegistration.validateEmail("biswajitdixi");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void givenMobileNoValid() {
+        boolean result = true;
+        try {
+            result = userRegistration.validateMobileNo("91 9437726849");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenMobileNoInvalid() {
+        boolean result = false;
+        try {
+            result = userRegistration.validateMobileNo("2928824525");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void givenPasswordValid() {
+        boolean result = true;
+        try {
+            result = userRegistration.validatePassword("A1@12g449");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenPasswordFourInvalid() {
+        boolean result = false;
+        try {
+            result = userRegistration.validatePassword("dfffds");
+        } catch (UserRegistrationException e) {
+
+            e.printStackTrace();
+        }
+        Assert.assertFalse(result);
     }
 }
