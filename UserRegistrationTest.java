@@ -1,90 +1,39 @@
-package com.bridgelab;
-
-import org.junit.Assert;
+import java.util.Arrays;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+
+@RunWith(Parameterized.class)
 public class UserRegistrationTest {
-    UserRegistration userRegistration=new UserRegistration();
-    @Test
-    public void givenFirstNameHappy(){
-        boolean result=userRegistration.validateFirstName("Biswa");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenFirstNameSad(){
-        boolean result=userRegistration.validatePassword4("biswa");
-        Assert.assertFalse(result);
-    }
 
-    @Test
-    public void givenLastNameHappy(){
-        boolean result=userRegistration.validateLastName("Dixit");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenLastNameSad(){
-        boolean result=userRegistration.validateLastName("dixit");
-        Assert.assertFalse(result);
-    }
-    @Test
-    public void givenEmailHappy(){
-        boolean result=userRegistration.validateEmail("biswajitdixit@gmail.com");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenEmailSad(){
-        boolean result=userRegistration.validateEmail("biswajitdixitgmail.com");
-        Assert.assertFalse(result);
-    }
+    private String emailId;
+    private boolean expected;
 
-    @Test
-    public void givenMobileNoHappy(){
-        boolean result=userRegistration.validateMobileNo("91 9437726849");
-        Assert.assertTrue(result);
+    public UserRegistrationTest(String emailId, boolean expected) {
+        this.emailId = emailId;
+        this.expected = expected;
+    }
+    @Parameterized.Parameters(name= "{index}: isValid({0})={1}")
+    public static Iterable<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                        {"abc@yahoo.com", true},
+                        {"abc-100@yahoo.com", true},
+                        {"abc.100@yahoo.com", true},
+                        {"abc.100@abc.net", true},
+                        {"abc@1.com", true},
+                        {"abc", false},
+                        {"abc@.com.my",false},
+                        {"abc123@.com",false }
+                }
+        );
     }
     @Test
-    public void givenMobileNoSad(){
-        boolean result=userRegistration.validateMobileNo("9437726849");
-        Assert.assertFalse(result);
-    }
-    @Test
-    public void givenPasswordOneHappy(){
-        boolean result=userRegistration.validatePassword1("abcdbd12");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenPasswordOneSad(){
-        boolean result=userRegistration.validatePassword1("andkk");
-        Assert.assertFalse(result);
-    }
-    @Test
-    public void givenPasswordTwoHappy(){
-        boolean result=userRegistration.validatePassword2("Aabdhtfgh");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenPasswordTwoSad(){
-        boolean result=userRegistration.validatePassword2("acgsjdjd");
-        Assert.assertFalse(result);
-    }
-    @Test
-    public void givenPasswordThreeHappy(){
-        boolean result =userRegistration.validatePassword3("1Ajjsvcjshg");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenPasswordThreeSad(){
-        boolean result=userRegistration.validatePassword3("Aggdvhfdsf");
-        Assert.assertFalse(result);
-    }
-    @Test
-    public void givenPasswordFourHappy(){
-        boolean result=userRegistration.validatePassword4("@A1hbkdbaa");
-        Assert.assertTrue(result);
-    }
-    @Test
-    public void givenPasswordFourSad(){
-        boolean result=userRegistration.validatePassword4("hjvjadjh");
-        Assert.assertFalse(result);
+    public void testIsValidEmailId() throws Exception {
+        boolean actual= UserRegistration.validateEmail(emailId);
+        assertThat(actual, is(equalTo(expected)));
     }
 }
